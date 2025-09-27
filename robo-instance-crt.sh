@@ -19,6 +19,7 @@ do
     fi
 
     echo "$instance: $IP"
+    INSTANCE_NAME=$(instance)
 
     aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
@@ -28,7 +29,7 @@ do
         {
         "Action": "UPSERT",
         "ResourceRecordSet"  : {
-            "Name"              : "'$DOMAIN_NAME'"
+            "Name"              : "'$INSTANCE_NAME.$DOMAIN_NAME'"
             ,"Type"             : "A"
             ,"TTL"              : '1'
             ,"ResourceRecords"  : [{
