@@ -15,7 +15,7 @@ do
         RECORD_NAME="$instance.$DOMAIN_NAME" # mongodb.daws86s.fun
     else
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
-        RECORD_NAME="$DOMAIN_NAME" # daws86s.fun
+        RECORD_NAME="$instance.$DOMAIN_NAME" # daws86s.fun
     fi
 
     echo "$instance: $IP"
@@ -29,7 +29,7 @@ do
         {
         "Action": "UPSERT",
         "ResourceRecordSet"  : {
-            "Name"              : "'$INSTANCE_NAME$DOMAIN_NAME'"
+            "Name"              : "'$RECORD_NAME'"
             ,"Type"             : "A"
             ,"TTL"              : '1'
             ,"ResourceRecords"  : [{
