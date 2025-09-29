@@ -29,7 +29,7 @@ do
         {
         "Action": "UPSERT",
         "ResourceRecordSet"  : {
-            "Name"              : "'$INSTANCE_NAME.$DOMAIN_NAME'"
+            "Name"              : "'$INSTANCE_NAME$DOMAIN_NAME'"
             ,"Type"             : "A"
             ,"TTL"              : '1'
             ,"ResourceRecords"  : [{
