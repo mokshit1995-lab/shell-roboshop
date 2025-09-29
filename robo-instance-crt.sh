@@ -3,7 +3,7 @@
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-0ec0e50897da3a652" # replace with your SG ID
 ZONE_ID="Z04875532VKXVTOFBR7OL" # replace with your ID
-DOMAIN_NAME="gunti.space"
+DOMAIN_NAME="mgunti.space"
 
 for instance in $@ # mongodb redis mysql
 do
