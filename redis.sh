@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "Script execited at :$(date)" | tee -a &>>$LOG_FILE
 USERID=$(id -u)
 
 R="\e[31m"
@@ -18,8 +18,6 @@ SCRIPT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER
-
-echo "Script execited at :$(date)" | tee -a &>>$LOG_FILE
 
 VALIDATE(){
     if [ $1 -ne 0 ];then
