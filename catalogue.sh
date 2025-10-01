@@ -39,7 +39,7 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "NodeJS Install"
 
 id roboshop &&>>$LOG_FILE
-if [ $? = 0 ]; then
+if [ $? != 0 ]; then
     echo "User already added"
 else
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
@@ -72,7 +72,7 @@ VALIDATE $? "Daemon-reload"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install MongoDB client"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 VALIDATE $? "Adding Mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
