@@ -39,7 +39,7 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "NodeJS Install"
 
 id roboshop &>>$LOG_FILE
-if [ $? != 0 ]; then
+if [ $? = 0 ]; then
     echo "User already added"
 else
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
@@ -81,7 +81,8 @@ VALIDATE $? "Adding Mongo repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install MongoDB client"
 
-INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
+#INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
+INDEX=$(mongosh mongodb.mgunti.space --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
     mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Load catalogue products"
