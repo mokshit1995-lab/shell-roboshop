@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AMI_ID="ami-09c813fb71547fc4f"
-SG_ID="sg-0ec0e50897da3a652" # replace with your SG ID
+SG_ID="sg-0c61f8c910f73455b" # replace with your SG ID
 ZONE_ID="Z04875532VKXVTOFBR7OL" # replace with your ID
 DOMAIN_NAME="mgunti.space"
 
