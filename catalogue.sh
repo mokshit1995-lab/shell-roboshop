@@ -69,17 +69,14 @@ VALIDATE $? "Setup Catalogue service"
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon-reload"
 
-dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Install MongoDB client"
-
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
-VALIDATE $? "Adding Mongo repo"
-
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enable Catalogue"
 
 systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "Start Catalogue"
+
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
+VALIDATE $? "Adding Mongo repo"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Install MongoDB client"
