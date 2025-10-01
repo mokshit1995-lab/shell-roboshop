@@ -38,14 +38,14 @@ VALIDATE $? "NodeJS Module Enable"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "NodeJS Install"
 
-id roboshop &&>>$LOG_FILE
+id roboshop &>>$LOG_FILE
 if [ $? != 0 ]; then
     echo "User already added"
 else
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
 fi
 
-mkdir /app &>>$LOG_FILE
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
