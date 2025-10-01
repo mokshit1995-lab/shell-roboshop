@@ -21,10 +21,10 @@ echo "Script started execution at $(date)" &>>$LOG_FILE
 
 VALIDATE(){
     if [ $1 != 0 ]
-        echo -e "$2 ... $R FAILUER $N" | tee -a &>>$LOG_FILE
+        echo -e "$2 ... $R FAILUER $N" | tee -a $LOG_FILE
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a &>>$LOG_FILE
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
