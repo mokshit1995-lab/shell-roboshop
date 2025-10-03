@@ -9,6 +9,7 @@ N="\e[0m"
 
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$(echo $0 | curl -d "." -f1)
+SCRPIT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER &>>$LOG_FILE
@@ -57,3 +58,14 @@ go get &>>$LOG_FILE
 go build &>>$LOG_FILE
 VALIDATE $? "Install go dependencies"
 
+cp $SCRIPT_DIR/dispatch.service /etc/systemd/system/dispatch.service &>>$LOG_FILE
+VALIDATE $? "Create Dispatch Service"
+
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Deamon Reload"
+
+systemctl enable dispatch &>>$LOG_FILE
+VALIDATE $? "Enable Dispatch"
+
+systemctl start dispatch
+VALIDATE $? "Start Dispatch"
