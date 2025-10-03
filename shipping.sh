@@ -11,6 +11,7 @@ LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIR=$PWD
+MYSQLIP="mysql.mgunti.space"
 
 echo "Script execution started at : $(date)"  | tee -a $LOG_FILE
 
@@ -44,9 +45,40 @@ curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shippin
 VALIDATE $? "Download shipping code"
 
 cd /app &>>$LOG_FILE
-VALIDATE $? "
+VALIDATE $? "To app dir"
+
 unzip /tmp/shipping.zip
+VALIDATE $? "Unzip Shipping code"
+
+cd /app &>>$LOG_FILE
+VALIDATE $? "to app dir"
+
+mvn clean package &>>$LOG_FILE
+VALIDATE $? "Installing dependencies of Maven"
+
+mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
+VALIDATE $? "Move target shipping JAR file to Shipping"
+
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Deamon Reload"
+
+systemctl enable shipping &>>$LOG_FILE
+VALIDATE $? "Enable Shipping"
+
+systemctl start shipping &>>$LOG_FILE
+VALIDATE $? "Start Shipping"
 
 
+dnf install mysql -y &>>$LOG_FILE
+VALIDATE $? "Install Mysql"
 
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
+if [$? -ne 0]; then
+    mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/schema.sql
+    mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/app-user.sql 
+    mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/master-data.sql
+else
+    echo -e "Shipping data is already loaded ... $Y SKIPPING $N"
+fi
 
+systemctl restart shipping
