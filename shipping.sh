@@ -72,7 +72,7 @@ VALIDATE $? "Start Shipping"
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Install Mysql"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
+mysql -h $MYSQLIP -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
 if [$? -ne 0]; then
     mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/schema.sql
     mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/app-user.sql 
