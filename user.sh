@@ -61,4 +61,16 @@ VALIDATE $? "Unzip artifact"
 npm install &>>$LOG_FILE
 VALIDATE $1 "Install Depencencies"
 
+cp $SCRIPT_DIR/user.service vim /etc/systemd/system/user.service &>>$LOG_FILE
+VALIDATE $1 "Setup systemD for User.service"
+
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $1 "Deamon-Reload"
+
+systemctl enable user &>>$LOG_FILE
+VALIDATE $1 "Enable User"
+
+systemctl start user &>>$LOG_FILE
+VALIDATE $1 "Start User"
+
 
