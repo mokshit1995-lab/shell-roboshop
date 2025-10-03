@@ -7,10 +7,12 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOGS_FOLDER="var/logs/shell-roboshop"
+LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOGS_FOLDER.$SCRIPT_NAME"
+SCRIPT_DIR=$PWD
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
+mkdir -p $LOGS_FOLDER
 echo "Script execution started at : $(date) "
 
 if [ $USERID -ne 0 ]; then
@@ -20,9 +22,10 @@ fi
 
 VALIDATE(){
     if [ $1 -ne 0]; then
-        echo "$2...$R FAILED $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$R FAILED $N" | tee -a &>>$LOG_FILE
+        exit 1
     else
-        echo "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
     fi
 }
 
