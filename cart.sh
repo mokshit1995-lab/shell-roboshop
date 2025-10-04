@@ -54,6 +54,9 @@ VALIDATE $? "Download cart artifacts"
 cd /app  &>>$LOG_FILE
 VALIDATE $? "Go to App Dir"
 
+rm -rf /app/* &>>$LOG_FILE
+VALIDATE $? "Remove existing code"
+
 unzip /tmp/cart.zip &>>$LOG_FILE
 VALIDATE $? "Unzip cart artifacts"
 
