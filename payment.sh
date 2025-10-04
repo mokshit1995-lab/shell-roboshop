@@ -19,20 +19,20 @@ if ( $USERID -ne 0); then
     exit 1
 fi
 
-echo "Script executed at  $(date)" | tee -a &>>$LOG_FILE
+echo "Script executed at  $(date)" | tee -a $LOG_FILE
 
 VALIDATE(){
     if [ $1 -ne 0]; then
-        echo -e "$2...$R FAILURE $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else 
-        echo -e "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
 dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "Install Python"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [ $0 -ne 0]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else
@@ -48,6 +48,9 @@ VALIDATE $? "Download Payment artifacts"
 
 cd /app &>>$LOG_FILE
 VALIDATE $? "To app"
+
+rm -rf /app/*
+VALIDATE $? "Remove existing code"
 
 unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "Unzip payment artifacts"
