@@ -12,19 +12,21 @@ SCRIPT_DIR=$PWD
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
-if [$USERID -ne 0]; then
+mkdir -p $LOGS_FOLDER &>>$LOG_FILE
+
+if [ $USERID -ne 0 ]; then
     echo -e "Please execute the script using root privilage" &>>$LOG_FILE
 fi
 
 VALIDATE(){
     if [ $1 -ne 0]; then
-        echo -e "$2...$R FAILURE $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else
-        echo -e "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE 
+        echo -e "$2...$G SUCCESS $N" | tee -a $LOG_FILE 
     fi
 }
 
-cp $SCRIPT_DIR /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
+cp $SCRIPT_DIR/rabbit.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "Copy of rabbit repo"
 
 dnf install rabbitmq-server -y &>>$LOG_FILE
