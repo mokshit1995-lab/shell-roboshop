@@ -37,7 +37,7 @@ id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else 
-    echo "$G Roboshop user already created $N"
+    echo -e "$G Roboshop user already created $N"
 fi
 
 mkdir -p /app &>>LOG_FILE
