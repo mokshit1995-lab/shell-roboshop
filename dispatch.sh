@@ -20,7 +20,7 @@ if [ $USERID -ne 0]; then
 fi
 
 VALIDATE(){
-    if [ $1 -ne 0]; then
+    if [ $1 -ne 0 ]; then
         echo "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else
         echo "$2...$G SUCCESS $N" | tee -a $LOG_FILE
@@ -31,7 +31,7 @@ dnf install golang -y &>>$LOG_FILE
 VALIDATE $? "Install Golang"
 
 id roboshop &>>$LOG_FILE
-if [$? -ne 0]; then
+if  [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 else
     echo "User already Created"
@@ -45,6 +45,9 @@ VALIDATE $? "Download Dispatch"
 
 cd /app &>>$LOG_FILE
 VALIDATE $? "To App"
+
+rm -rf /app/* &>>$LOG_FILE
+VALIDATE $? "Remove existing code"
 
 unzip /tmp/dispatch.zip &>>$LOG_FILE
 VALIDATE $? "Unzip Dispatch"
@@ -67,5 +70,5 @@ VALIDATE $? "Deamon Reload"
 systemctl enable dispatch &>>$LOG_FILE
 VALIDATE $? "Enable Dispatch"
 
-systemctl start dispatch
+systemctl start dispatch &>>$LOG_FILE
 VALIDATE $? "Start Dispatch"
