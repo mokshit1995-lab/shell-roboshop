@@ -15,22 +15,22 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 mkdir -p $LOGS_FOLDER &>>$LOG_FILE
 
 if [ $USERID -ne 0]; then
-    echo -e "Execute this Script using root privilage" &>>$LOG_FILE
+    echo -e "Execute this Script using root privilage" 
     exit 1
 fi
 
 VALIDATE(){
     if [ $1 -ne 0]; then
-        echo "$2...$R FAILURE $N" | tee -a &>>$LOG_FILE
+        echo "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else
-        echo "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
+        echo "$2...$G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
 dnf install golang -y &>>$LOG_FILE
 VALIDATE $? "Install Golang"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [$? -ne 0]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 else

@@ -39,10 +39,11 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Install Nodejs"
 
 id roboshop &>>$LOG_FILE
-if [ $? = 0]; then
-    echo "roboshop user already exist"
-else 
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    VALIDATE $? "Creating system user"
+else
+    echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
 mkdir -p /app &>>$LOG_FILE
@@ -53,6 +54,9 @@ VALIDATE $? "Download artifacts"
 
 cd /app &>>$LOG_FILE
 VALIDATE $? "Moved to App directory"
+
+rm -rf /app/*
+VALIDATE $? "Removing existing code"
 
 unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATE $? "Unzip artifact"
