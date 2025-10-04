@@ -12,7 +12,7 @@ SCRIPT_NAME=$(echo $0 | curl -d "." -f1)
 SCRPIT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
-mkdir -p $LOGS_FOLDER &>>$LOG_FILE
+mkdir -p $LOGS_FOLDER 
 
 if [ $USERID -ne 0]; then
     echo -e "Execute this Script using root privilage" 
