@@ -32,6 +32,12 @@ VALIDATE $? "Copy of rabbit repo"
 dnf install rabbitmq-server -y &>>$LOG_FILE
 VALIDATE $? "Install Rabbit MQ"
 
+systemctl enable rabbitmq-server &>>$LOG_FILE
+VALIDATE $? "Enabling RabbitMQ Server"
+
+systemctl start rabbitmq-server &>>$LOG_FILE
+VALIDATE $? "Starting RabbitMQ"
+
 rabbitmqctl add_user roboshop roboshop123 &>>$LOG_FILE
 VALIDATE $? "Rabbit user roboshop addition"
 
