@@ -14,7 +14,7 @@ LOG_FILE="$LOG_DIR/$SCRIPT_NAME.log"
 
 mkdir -p $LOG_DIR
 
-if ( $USERID -ne 0); then
+if [ $USERID -ne 0 ]; then
     echo "Please run script with root privilage"
     exit 1 
 fi
@@ -24,7 +24,6 @@ echo "Script execution started at $(date)" &>>$LOG_FILE
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2...$R FAILLED $N" | tee -a &>>$LOG_FILE
-        exit 1
     else
         echo -e "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
     fi
@@ -41,7 +40,7 @@ VALIDATE $? "Install Nodejs"
 
 
 id roboshop
-if [ $? -ne 0]; then
+if [ $? -ne 0] ; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 else 
     echo "roboshop user already exist"
