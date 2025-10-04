@@ -20,7 +20,7 @@ mkdir -p $LOG_DIR
 echo "Script started execution at $(date)" &>>$LOG_FILE
 
 VALIDATE(){
-    if [ $1 != 0 ]
+    if [ $1 != 0 ]; then
         echo -e "$2 ... $R FAILUER $N" | tee -a $LOG_FILE
         exit 1
     else
@@ -57,5 +57,8 @@ VALIDATE $? "Unzip frontend content"
 
 cp $SCRIPT_DIR/frontent.cont /etc/nginx/nginx.conf
 VALIDATE $? "Copy Frontend content to nginx.conf"
+
+systemctl restart nginx 
+VALIDATE $? "restart nginx"
 
 
