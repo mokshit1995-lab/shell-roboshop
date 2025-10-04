@@ -14,7 +14,7 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER
 
-if ( $USERID -ne 0 ); then
+if [ $USERID -ne 0 ]; then
     echo "Please use root privilage to run this script"
     exit 1
 fi
