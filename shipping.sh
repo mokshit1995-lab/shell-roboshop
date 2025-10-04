@@ -49,7 +49,10 @@ VALIDATE $? "Download shipping code"
 cd /app &>>$LOG_FILE
 VALIDATE $? "To app dir"
 
-unzip /tmp/shipping.zip
+rm -rf /app/*
+VALIDATE $? "Remove existing code"
+
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "Unzip Shipping code"
 
 cd /app &>>$LOG_FILE
