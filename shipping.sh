@@ -13,6 +13,8 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIR=$PWD
 MYSQLIP="mysql.mgunti.space"
 
+mkdir -p $LOGS_FOLDER
+
 echo "Script execution started at : $(date)"  | tee -a $LOG_FILE
 
 if [$USERIF -ne 0]; then
@@ -31,9 +33,9 @@ VALIDATE(){
 dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "Install Maven"
 
-id roboshop
+id roboshop &>>$LOG_FILE
 if [$? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else 
     echo "$G Roboshop user already created $N"
 fi
@@ -81,4 +83,5 @@ else
     echo -e "Shipping data is already loaded ... $Y SKIPPING $N"
 fi
 
-systemctl restart shipping
+systemctl restart shipping &>>$LOG_FILE
+VALIDATE $? "Restart Shiping"
