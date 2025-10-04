@@ -37,7 +37,7 @@ else
     echo "User already Created"
 fi
 
-mkdir /app &>>$LOG_FILE
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "Create /app Dir"
 
 curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch-v3.zip &>>$LOG_FILE
