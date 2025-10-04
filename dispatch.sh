@@ -8,7 +8,7 @@ Y="\e[33m"
 N="\e[0m"
 
 LOGS_FOLDER="/var/log/shell-roboshop"
-SCRIPT_NAME=$(echo $0 | curl -d "." -f1)
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 SCRPIT_DIR=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
