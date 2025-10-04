@@ -19,13 +19,13 @@ if [ $USERID -ne 0 ]; then
     exit 1 
 fi
 
-echo "Script execution started at $(date)"  | tee -a &>>$LOG_FILE
+echo "Script execution started at $(date)"  | tee -a $LOG_FILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2...$R FAILLED $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$R FAILLED $N" | tee -a $LOG_FILE
     else
-        echo -e "$2...$G SUCCESS $N" | tee -a &>>$LOG_FILE
+        echo -e "$2...$G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
@@ -38,12 +38,11 @@ VALIDATE $? "Enable NodeJS 20"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Install Nodejs"
 
-
-id roboshop
-if [ $? -ne 0]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-else 
+id roboshop &>>$LOG_FILE
+if [ $? = 0]; then
     echo "roboshop user already exist"
+else 
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 fi
 
 mkdir -p /app &>>$LOG_FILE
