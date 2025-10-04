@@ -12,7 +12,7 @@ SCRIPT_DIR=$PWD
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
-mkdir -p $LOGS_FOLDER &>>$LOG_FILE
+mkdir -p $LOGS_FOLDER 
 
 if [ $USERID -ne 0 ]; then
     echo -e "Please execute the script using root privilage" &>>$LOG_FILE
