@@ -65,7 +65,7 @@ mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
 VALIDATE $? "Move target shipping JAR file to Shipping"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
-VALDIDATE $? "Create Shipping Service"
+VALIDATE $? "Create Shipping Service"
 
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Deamon Reload"
