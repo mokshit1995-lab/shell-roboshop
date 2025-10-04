@@ -22,7 +22,7 @@ fi
 echo "Script executed at  $(date)" | tee -a $LOG_FILE
 
 VALIDATE(){
-    if [ $1 -ne 0]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$2...$R FAILURE $N" | tee -a $LOG_FILE
     else 
         echo -e "$2...$G SUCCESS $N" | tee -a $LOG_FILE
@@ -33,13 +33,13 @@ dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "Install Python"
 
 id roboshop &>>$LOG_FILE
-if [ $0 -ne 0]; then
+if [ $0 -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else
     echo -e "User already exist" &>>$LOG_FILE
 fi
 
-mkdir -p /app &>>>$LOG_FILE
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "create /app dir"
 
 
