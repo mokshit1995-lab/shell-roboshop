@@ -19,7 +19,7 @@ if [ $USERID -ne 0 ]; then
     exit 1 
 fi
 
-echo "Script execution started at $(date)" &>>$LOG_FILE
+echo "Script execution started at $(date)"  | tee -a &>>$LOG_FILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
@@ -40,8 +40,8 @@ VALIDATE $? "Install Nodejs"
 
 
 id roboshop
-if [ $? -ne 0] ; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+if [ $? -ne 0]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else 
     echo "roboshop user already exist"
 fi
@@ -59,18 +59,18 @@ unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATE $? "Unzip artifact"
 
 npm install &>>$LOG_FILE
-VALIDATE $1 "Install Depencencies"
+VALIDATE $? "Install Depencencies"
 
 cp $SCRIPT_DIR/user.service vim /etc/systemd/system/user.service &>>$LOG_FILE
-VALIDATE $1 "Setup systemD for User.service"
+VALIDATE $? "Setup systemD for User.service"
 
 systemctl daemon-reload &>>$LOG_FILE
-VALIDATE $1 "Deamon-Reload"
+VALIDATE $? "Deamon-Reload"
 
 systemctl enable user &>>$LOG_FILE
-VALIDATE $1 "Enable User"
+VALIDATE $? "Enable User"
 
 systemctl start user &>>$LOG_FILE
-VALIDATE $1 "Start User"
+VALIDATE $? "Start User"
 
 
