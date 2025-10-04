@@ -64,6 +64,9 @@ VALIDATE $? "Installing dependencies of Maven"
 mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
 VALIDATE $? "Move target shipping JAR file to Shipping"
 
+cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
+VALDIDATE $? "Create Shipping Service"
+
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Deamon Reload"
 
@@ -72,7 +75,6 @@ VALIDATE $? "Enable Shipping"
 
 systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Start Shipping"
-
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Install Mysql"
