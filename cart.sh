@@ -21,7 +21,7 @@ if [ $USERID -ne 0 ]; then
 fi
 
 VALIDATE(){
-    if [ $1 -ne 0]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$2...$R FAILED $N" | tee -a $LOG_FILE
         exit 1
     else
@@ -40,7 +40,7 @@ VALIDATE $? "Install Nodejs"
 
 id roboshop &>>$LOG_FILE
 if [$? -ne 0]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else
     echo "Roboshop id Already exist"
 fi
@@ -63,16 +63,16 @@ VALIDATE $? "Go to App Dir"
 npm install &>>$LOG_FILE
 VALIDATE $? "Install depedencies"
 
-cp $SCRIPT_DIR/cart.service vim /etc/systemd/system/cart.service &>>$LOG_FILE
+cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$LOG_FILE
 VALIDATE $? "Create systemD of cart"
 
-systemctl deamon-reload
+systemctl deamon-reload  &>>$LOG_FILE
 VALIDATE $? "Deamon Reload"
 
-systemctl enable cart
+systemctl enable cart  &>>$LOG_FILE
 VALIDATE $? "Enable cart"
 
-systemctl start cart 
+systemctl start cart  &>>$LOG_FILE
 VALIDATE $? "Enable cart"
 
 
