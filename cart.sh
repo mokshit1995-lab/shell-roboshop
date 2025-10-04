@@ -69,8 +69,8 @@ VALIDATE $? "Install depedencies"
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$LOG_FILE
 VALIDATE $? "Create systemD of cart"
 
-systemctl deamon-reload  &>>$LOG_FILE
-VALIDATE $? "Deamon Reload"
+systemctl daemon-reload  &>>$LOG_FILE
+VALIDATE $? "Daemon Reload"
 
 systemctl enable cart  &>>$LOG_FILE
 VALIDATE $? "Enable cart"
