@@ -17,13 +17,13 @@ mkdir -p $LOGS_FOLDER
 
 echo "Script execution started at : $(date)"  | tee -a $LOG_FILE
 
-if [$USERIF -ne 0]; then
+if [ $USERID -ne 0 ]; then
     echo "Please use root privilage to run the script"
     exit 1 
 fi
 
 VALIDATE(){
-    if [ $1 -ne 0]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$2...$R FAILURE $N"  | tee -a $LOG_FILE
     else
         echo -e "$2...$G SUCCESS $N"  | tee -a $LOG_FILE
@@ -34,7 +34,7 @@ dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "Install Maven"
 
 id roboshop &>>$LOG_FILE
-if [$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 else 
     echo "$G Roboshop user already created $N"
@@ -75,7 +75,7 @@ dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Install Mysql"
 
 mysql -h $MYSQLIP -uroot -pRoboShop@1 -e 'use cities' &>>$LOG_FILE
-if [$? -ne 0]; then
+if [ $? -ne 0 ]; then
     mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/schema.sql
     mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/app-user.sql 
     mysql -h  $MYSQLIP -uroot -pRoboShop@1 < /app/db/master-data.sql
