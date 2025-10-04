@@ -55,7 +55,7 @@ VALIDATE $? "Got to /usr/share/nginx/html"
 unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "Unzip frontend content"
 
-cp $SCRIPT_DIR/frontent.cont /etc/nginx/nginx.conf
+cp $SCRIPT_DIR/frontend.cont /etc/nginx/nginx.conf
 VALIDATE $? "Copy Frontend content to nginx.conf"
 
 systemctl restart nginx 
